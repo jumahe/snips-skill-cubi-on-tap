@@ -24,7 +24,7 @@ def action_wrapper(hermes, intentMessage):
     hermes.publish_end_session(current_session_id, result_sentence)
 
 def say(text):
-    os.system('mosquitto_pub -p 1883 -t hermes/tts/say -m "{\"text\":\"'+text+'\",\"siteId\":\"default\",\"lang\":\"fr\"}"')
+    os.system('mosquitto_pub -p 1883 -t hermes/tts/say -m "{\"text\":\"Bonjour le monde.\",\"siteId\":\"default\",\"lang\":\"fr\"}"')
 
 
 if __name__ == "__main__":
