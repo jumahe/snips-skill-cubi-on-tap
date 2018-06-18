@@ -14,16 +14,11 @@ def subscribe_intent_callback(hermes, intentMessage):
     action_wrapper(hermes, intentMessage)
 
 def action_wrapper(hermes, intentMessage):
-    say(hermes,"Préparez votre verre, je vous sers dans 3 secondes...")
-    sleep(1)
-    say(hermes,"2 secondes")
-    sleep(1)
-    say(hermes,"1 seconde. Attention...")
-    sleep(1)
+    current_session_id = intentMessage.session_id
+    hermes.publish_continue_session(current_session_id, "Préparer votre verre...")
     GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     GPIO.output(14, GPIO.LOW)
-    current_session_id = intentMessage.session_id
     result_sentence = "Votre boisson est prête."
     hermes.publish_end_session(current_session_id, result_sentence)
 
