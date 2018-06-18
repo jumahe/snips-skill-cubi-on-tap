@@ -5,6 +5,7 @@ from hermes_python.hermes import Hermes
 from hermes_python.ontology import *
 import io
 import json
+import os
 from time import sleep
 from RPi import GPIO
 
@@ -15,15 +16,15 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 def action_wrapper(hermes, intentMessage):
     current_session_id = intentMessage.session_id
-    hermes.publish_continue_session(current_session_id, "Préparer votre verre...")
+    say("c'est parti.")
     GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     GPIO.output(14, GPIO.LOW)
-    result_sentence = "Votre boisson est prête."
+    result_sentence = "Voici votre boisson."
     hermes.publish_end_session(current_session_id, result_sentence)
 
-def say(hermes, text):
-    hermes.publish('tts/say', json.dumps({'text': text}))
+def say(text):
+    os.system('mosquitto_pub -p 1883 -t hermes/tts/say -m "{"text":"'+text+'","siteId":"default"}"')
 
 if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
