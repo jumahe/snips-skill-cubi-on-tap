@@ -28,7 +28,7 @@ def action_wrapper(hermes, intentMessage):
     hermes.publish_end_session(current_session_id, result_sentence)
 
 def say(hermes, text):
-    hermes.publish('hermes/tts/say', json.dumps({'text': text}))
+    hermes.publish('tts/say', json.dumps({'text': text}))
 
 if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
