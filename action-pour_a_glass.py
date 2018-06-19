@@ -23,7 +23,8 @@ def action_wrapper(hermes, intentMessage):
     hermes.publish_end_session(current_session_id, "Voici votre boisson.")
 
 def say(text):
-    pub_str = 'mosquitto_pub -p 1883 -t hermes/tts/say -m "{\\"text\\":\\"{0}\\",\\"siteId\\":\\"default\\",\\"lang\\":\\"fr\\"}"'.format(text)
+    payload = json.dumps({"text":text,"siteId":"default","lang":"fr"})
+    pub_str = 'mosquitto_pub -p 1883 -t hermes/tts/say -m "{0}"'.format(payload)
     os.system(pub_str)
 
 if __name__ == "__main__":
