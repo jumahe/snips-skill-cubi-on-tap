@@ -20,12 +20,11 @@ def action_wrapper(hermes, intentMessage):
     GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     GPIO.output(14, GPIO.LOW)
-    result_sentence = "Voici votre boisson."
-    hermes.publish_end_session(current_session_id, result_sentence)
+    hermes.publish_end_session(current_session_id, "Voici votre boisson.")
 
 def say(text):
-    os.system('mosquitto_pub -p 1883 -t hermes/tts/say -m "{\"text\":\"Bonjour le monde.\",\"siteId\":\"default\",\"lang\":\"fr\"}"')
-
+    pub_str = 'mosquitto_pub -p 1883 -t hermes/tts/say -m "{\\"text\\":\\"{0}\\",\\"siteId\\":\\"default\\",\\"lang\\":\\"fr\\"}"'.format(text)
+    os.system(pub_str)
 
 if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
