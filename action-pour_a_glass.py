@@ -16,7 +16,7 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 def action_wrapper(hermes, intentMessage):
     current_session_id = intentMessage.session_id
-    say("c'est parti.")
+    #say("c'est parti.")
     #GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     #GPIO.output(14, GPIO.LOW)
