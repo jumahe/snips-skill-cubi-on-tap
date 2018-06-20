@@ -7,7 +7,7 @@ import io
 import json
 import os
 from time import sleep
-#from RPi import GPIO
+from RPi import GPIO
 
 POURING_TIME = 10
 
@@ -16,10 +16,9 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 def action_wrapper(hermes, intentMessage):
     current_session_id = intentMessage.session_id
-    #say("c'est parti.")
-    #GPIO.output(14, GPIO.HIGH)
+    GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
-    #GPIO.output(14, GPIO.LOW)
+    GPIO.output(14, GPIO.LOW)
     hermes.publish_end_session(current_session_id, "Voici votre boisson.")
 
 def say(text):
@@ -28,8 +27,8 @@ def say(text):
     os.system(pub_str)
 
 if __name__ == "__main__":
-    #GPIO.setmode(GPIO.BCM)
-    #GPIO.setup(14, GPIO.OUT)
-    #GPIO.output(14, GPIO.LOW)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(14, GPIO.OUT)
+    GPIO.output(14, GPIO.LOW)
     with Hermes("localhost:1883") as h:
         h.subscribe_intent("jumahe:pour_a_glass", subscribe_intent_callback).start()
