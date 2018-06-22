@@ -9,17 +9,18 @@ import os
 from time import sleep
 from RPi import GPIO
 
-POURING_TIME = 10
+POURING_TIME = 1
 
 def subscribe_intent_callback(hermes, intentMessage):
     action_wrapper(hermes, intentMessage)
 
 def action_wrapper(hermes, intentMessage):
     current_session_id = intentMessage.session_id
+    say("Attention, voici votre boisson.")
     GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     GPIO.output(14, GPIO.LOW)
-    hermes.publish_end_session(current_session_id, "Voici votre boisson.")
+    hermes.publish_end_session(current_session_id, "Et voilà.")
 
 def say(text):
     payload = json.dumps({"text":text,"siteId":"default","lang":"fr"})
