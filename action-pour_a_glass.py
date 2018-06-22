@@ -9,22 +9,21 @@ import os
 from time import sleep
 from RPi import GPIO
 
-POURING_TIME = 1
+POURING_TIME = 2
 
 def subscribe_intent_callback(hermes, intentMessage):
     action_wrapper(hermes, intentMessage)
 
 def action_wrapper(hermes, intentMessage):
     current_session_id = intentMessage.session_id
-    say("Attention, voici votre boisson.")
+    say()
     GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     GPIO.output(14, GPIO.LOW)
     hermes.publish_end_session(current_session_id, "Et voilà.")
 
-def say(text):
-    payload = json.dumps({"text":text,"siteId":"default","lang":"fr"})
-    pub_str = 'mosquitto_pub -p 1883 -t hermes/tts/say -m "{0}"'.format(payload)
+def say():
+    pub_str = "mosquitto_pub -p 1883 -t hermes/tts/say -m '{\"text\":\"Voici votre boisson\",\"siteId\":\"default\",\"lang\":\"fr\"}'"
     os.system(pub_str)
 
 if __name__ == "__main__":
