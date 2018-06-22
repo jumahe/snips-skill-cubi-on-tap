@@ -16,14 +16,14 @@ def subscribe_intent_callback(hermes, intentMessage):
 
 def action_wrapper(hermes, intentMessage):
     current_session_id = intentMessage.session_id
-    say()
+    say("test")
     GPIO.output(14, GPIO.HIGH)
     sleep(POURING_TIME)
     GPIO.output(14, GPIO.LOW)
     hermes.publish_end_session(current_session_id, "Et voilà.")
 
-def say():
-    pub_str = "mosquitto_pub -p 1883 -t hermes/tts/say -m '{\"text\":\"Voici votre boisson\",\"siteId\":\"default\",\"lang\":\"fr\"}'"
+def say(text):
+    pub_str = "mosquitto_pub -p 1883 -t hermes/tts/say -m '{\\"text\\":\\"Voici votre boisson\\",\\"siteId\\":\\"default\\",\\"lang\\":\\"fr\\"}'"
     os.system(pub_str)
 
 if __name__ == "__main__":
